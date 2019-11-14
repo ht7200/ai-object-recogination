@@ -1,2 +1,0 @@
-# AI Object Recognition
-

@@ -1,9 +1,12 @@
 
 //index.js
 import { Classifier } from '../../models/mobilenet/classifier'
+// import util from '../../utils/throttle'
 
 //获取应用实例
 const app = getApp()
+
+let _lastTime = 0
 
 Page({
   data: {
@@ -12,7 +15,7 @@ Page({
     predictionDuration: 0,
     preditionResults: [],
     resultOb: {},
-    result: ''
+    result: '',
   },
 
   classifier: null,
@@ -43,10 +46,10 @@ Page({
         console.log(predictionResults[0]);
         
         // 判断口红
-        if(predictionResults[0].index == 70 && predictionResults[0].value >= 0.3) {
-          this.LipstickVideo();
-        }else if(predictionResults[0].index == 74 && predictionResults[0].value >= 0.3) {
-          this.WatchVideo();
+        if(predictionResults[0].index == 70 && predictionResults[0].value >= 0.6) {
+          this.LipstickVideo()
+        }else if(predictionResults[0].index == 74 && predictionResults[0].value >= 0.6) {
+          this.WatchVideo()
         }// 手表
 
         this.setData({

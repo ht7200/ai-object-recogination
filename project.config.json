@@ -24,8 +24,8 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.9.2",
-	"appid": "wxee30b66bb5f839a5",
-	"projectname": "tf-test",
+	"appid": "wx4cfd3aa1579bb362",
+	"projectname": "ai-object-recognition",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

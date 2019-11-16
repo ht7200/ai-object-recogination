@@ -1,6 +1,6 @@
 <view class="page" style="height:{{windowHeight}}px">
   <view class="pop">
-    <image class="phone" mode="widthFix" src="cloud://files-sy9u7.6669-files-sy9u7-1300691796/phone.png" />
+    <image class="phone" mode="widthFix" src="{{phoneData}}" />
     <view >将长方形识别区对准物体</view>
     <view >识别成功后将出现预制动画</view>
     <button class="btn" bindtap="JumpToCamera">我知道了</button>

@@ -6,16 +6,43 @@ page{
 }
 
 .camera {
-  width: 75%;
-  height: 100vw;
+  width: 100%;
   background-color: #fff;
   margin: 0 auto;
-  transform: translateY(25%);
   z-index: 5;
 }
 
 .prediction-result {
   height: calc(100vh - 100vw); 
+}
+.cover-view{
+  width: 100%;
+  height: 100vh;
+  font-size: 0;
+}
+.mask{
+  float: left;
+  width: 25%;
+  height: 100vh;
+  background: rgba(0,0,0,.4);
+}
+.mid-mask{
+  float: left;
+  width: 50%;
+  height: 100vh;
+  border-left:1px solid rgba(255，255，255，.4);
+  border-right:1px solid rgba(255，255，255，.4);
+  margin: 0 -1px;
+}
+.mid-mask-top-bottom{
+  width: 100%;
+  height: 25vh;
+  background: rgba(0,0,0,.4);
+}
+.scan-aera{
+  width: 100%;
+  height: 50vh;
+  background: rgba(255, 255, 255, 0);
 }
 
 .logs{

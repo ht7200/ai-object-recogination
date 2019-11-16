@@ -1,10 +1,12 @@
 //index.js
 //获取应用实例
 const app = getApp()
+const imgs = require('../../utils/image')
 
 Page({
   data: {
     windowHeight: '100',
+    phoneData: imgs.phone
   },
   JumpToCamera() {
     wx.navigateTo({

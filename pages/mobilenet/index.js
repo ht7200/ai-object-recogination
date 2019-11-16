@@ -11,6 +11,7 @@ let _lastTime = 0
 Page({
   data: {
     windowHeight: '100vh',
+    windowWidth:'100vw',
     predicting: false,
     predictionDuration: 0,
     preditionResults: [],
@@ -86,8 +87,18 @@ Page({
     })
   },
   async onReady() {
-    this.initClassifier()
+    let _this = this;
+    wx.getSystemInfo({
+      success(res) {
+        console.log('windowWidth', res.windowWidth);
+        _this.setData({
+          windowHeight: res.windowHeight,
+          windowWidth: res.windowWidth
+        })
+      }
+    })
 
+    this.initClassifier()
     // Start the camera API to feed the captured images to the models.
     const context = wx.createCameraContext(this)
     const listener = context.onCameraFrame((frame) => {

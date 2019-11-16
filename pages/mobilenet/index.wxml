@@ -1,11 +1,21 @@
 <view class="page">
   <view class="page__bd">
     <camera
+      style="height:{{windowHeight}}px;width:{{windowWidth}}px;"
       device-position="back"
       flash="off"
       binderror="error"
       frame-size="medium"
       class="camera">
+      <cover-view class="cover-view" style="width:{{windowWidth}}px">
+        <cover-view class="mask"></cover-view>
+        <cover-view class="mid-mask">
+          <cover-view class="mid-mask-top-bottom"></cover-view>
+          <cover-view class="scan-aera"></cover-view>
+          <cover-view class="mid-mask-top-bottom"></cover-view>
+        </cover-view>
+        <cover-view class="mask"></cover-view>
+      </cover-view>
     </camera>
 
     <view class="logs">

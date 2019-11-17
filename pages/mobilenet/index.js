@@ -11,7 +11,7 @@ let _lastTime = 0
 Page({
   data: {
     windowHeight: '100vh',
-    windowWidth:'100vw',
+    windowWidth:'376',
     predicting: false,
     predictionDuration: 0,
     preditionResults: [],
@@ -90,10 +90,11 @@ Page({
     let _this = this;
     wx.getSystemInfo({
       success(res) {
-        console.log('windowWidth', res.windowWidth);
+        let windowWidth = res.windowWidth%5?res.windowWidth+(5-res.windowWidth%5):res.windowWidth;
+        console.log('windowWidth', windowWidth);
         _this.setData({
           windowHeight: res.windowHeight,
-          windowWidth: res.windowWidth
+          windowWidth: windowWidth
         })
       }
     })

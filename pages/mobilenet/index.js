@@ -56,17 +56,45 @@ Page({
         )
         const end = Date.now()
 
-        console.log(predictionResults[0]);
+        // console.log(predictionResults[0]);
         // 判断
-        const index = 70 ;//predictionResults[0].index;
-        if(config.list[index]){
+        const index = predictionResults[0].index;
+        const value = predictionResults[0].value;
+
+        /*
+        if(predictionResults[0].index == 70 && predictionResults[0].value >= 0.7) {
           clearTimeout(tot);
-          this.setData({
-            desc: config.list[index].desc,
-            video: config.list[index].video,
-            visable: true
-          })
-        }
+            _this.setData({
+              desc: '口红能瞬间点亮女人的气色。',
+              video: 'cloud://files-sy9u7.6669-files-sy9u7-1300691796/LipWithoutShine_x264.mp4',
+              visable: true
+            })
+        }else if(predictionResults[0].index == 74 && predictionResults[0].value >= 0.7) {
+          clearTimeout(tot);
+            _this.setData({
+              desc: '时钟停转也止不住时光荏苒。',
+              video: 'cloud://files-sy9u7.6669-files-sy9u7-1300691796/±‰¡≥final_1_x264.mp4',
+              visable: true
+            })
+        }*/
+
+        Object.keys(config.list).forEach(function(key){
+          if(Number(index) === Number(key) && value >= 0.7){
+            clearTimeout(tot);
+            console.log(index);
+            _this.setData({
+              desc: config.list[key].desc,
+              video: config.list[key].video,
+              visable: true
+            })
+          }
+        });
+
+        _this.setData({
+          predicting: false,
+          predictionDuration: end - start,
+          resultOb: predictionResults[0]
+        })
       })
     }
   },
@@ -95,7 +123,6 @@ Page({
     })
   },
   async onReady() {
-
     let _this = this;
     wx.getSystemInfo({
       success(res) {
@@ -129,6 +156,9 @@ Page({
         _this.JumpToFail();
       },10000)
     }
+    this.setData({
+      visable: false
+    })
   },
   onHide: function () {
     clearTimeout(tot);

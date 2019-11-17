@@ -52,7 +52,8 @@ page{
 
 
 .btn{
-  background: linear-gradient(#383838, #0D0D0D);
+  background: #383838;
+  border: 1px solid #FFF;
   width: 100px;
   position: fixed;
   bottom: 50%;

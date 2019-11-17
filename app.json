@@ -5,7 +5,7 @@
     "pages/mobilenet/index",
     "pages/failbg/index",
     "pages/popup/index",
-    "pages/lipstick/index"
+    "pages/video/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,0 +1,12 @@
+<video id="myVideo" autoplay object-fit="fill" controls="{{false}}" bindended="onEnded" src="{{src}}" >
+  <cover-view class="mask">
+    <cover-view class="maskBg">
+      <cover-view class="description">
+        {{desc}}
+      </cover-view>
+    </cover-view>
+    <button class="btnBack" bindtap="back" wx:if="{{showModal}}">
+      试试别的
+    </button>
+  </cover-view>
+</video>

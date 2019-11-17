@@ -1,6 +1,7 @@
 
 //index.js
-import { Classifier } from '../../models/mobilenet/classifier'
+import { Classifier } from '../../models/mobilenet/classifier';
+const config =  require('../../utils/config');
 
 //获取应用实例
 const app = getApp()
@@ -11,13 +12,15 @@ Page({
   data: {
     windowHeight: '100vh',
     windowWidth:'376',
+    loaded: false,
     predicting: false,
     predictionDuration: 0,
     preditionResults: [],
     resultOb: {},
     result: '',
     visable: false,
-    url: ''
+    desc: '',
+    video: ''
   },
 
   classifier: null,
@@ -30,7 +33,9 @@ Page({
       classifier.load().then(() => {
         this.classifier = classifier
         this.hideLoadingToast()
-        console.log('Loaded');
+        this.setData({
+          loaded: true
+        })
         tot = setTimeout(function(){
           _this.JumpToFail();
         },10000)
@@ -52,36 +57,26 @@ Page({
         const end = Date.now()
 
         console.log(predictionResults[0]);
-        
-        // 判断口红
-        if(predictionResults[0].index == 70 && predictionResults[0].value >= 0.6) {
+        // 判断
+        const index = 70 ;//predictionResults[0].index;
+        if(config.list[index]){
           clearTimeout(tot);
           this.setData({
-            url: '/pages/lipstick/index',
+            desc: config.list[index].desc,
+            video: config.list[index].video,
             visable: true
           })
-        }else if(predictionResults[0].index == 74 && predictionResults[0].value >= 0.6) {
-          clearTimeout(tot);
-          this.setData({
-            url: '/pages/watch/index',
-            visable: true
-          })
-        }// 手表
-        this.setData({
-          predicting: false,
-          predictionDuration: end - start,
-          resultOb: predictionResults[0]
-          // predictionResults: predictionResults
-        })
+        }
       })
     }
   },
   WatchVideo() {
+    clearTimeout(tot);
     this.setData({
       visable: false
     })
     wx.navigateTo({
-      url: this.data.url,
+      url: '/pages/video/index?src=' + this.data.video + '&desc='+ this.data.desc,
     })
   },
   showLoadingToast() {
@@ -94,21 +89,9 @@ Page({
   },
   JumpToFail() {
     console.log('JumpToFail')
+    clearTimeout(tot);
     wx.navigateTo({
       url: '/pages/failbg/index',
-    })
-  },
-  LoadingFailed() {
-    let _this = this;
-    wx.showModal({
-      title: '哎呀！',
-      content: '没有识别出物体',
-      showCancel : false,
-      success (res) {
-        if (res.confirm) {
-          _this.JumpToIndex()
-        } 
-      }
     })
   },
   async onReady() {
@@ -136,6 +119,15 @@ Page({
   onLoad: function() {
     if (this.classifier) {
       this.classifier.dispose()
+    }
+  },
+  onShow: function() {
+    console.log('onShow');
+    let _this =this;
+    if(this.data.loaded){
+      tot = setTimeout(function(){
+        _this.JumpToFail();
+      },10000)
     }
   },
   onHide: function () {

@@ -1,0 +1,10 @@
+<!--pages/failbg/index.wxml-->
+<view class="failed">
+  <view class="tost">
+    <view class="text">
+      <view>Ops!</view>
+      <view>没有识别到物体</view>
+    </view>
+    <view class="btn"  bindtap="JumpBack">再试一次</view>
+  </view>
+</view>

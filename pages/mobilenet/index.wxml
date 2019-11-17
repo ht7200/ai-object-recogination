@@ -11,17 +11,17 @@
         <cover-view class="mask"></cover-view>
         <cover-view class="mid-mask">
           <cover-view class="mid-mask-top-bottom"></cover-view>
-          <cover-view class="scan-aera"></cover-view>
+          <cover-view class="scan-aera">
+          </cover-view>
           <cover-view class="mid-mask-top-bottom"></cover-view>
         </cover-view>
         <cover-view class="mask"></cover-view>
+
+          <button wx:if="{{visable}}" class="btn"  bindtap="WatchVideo">
+            <button class="txt">识别成功</button>
+            <button class="s-btn">点击跳转：欣赏影片</button>
+          </button>
       </cover-view>
     </camera>
-
-    <view class="logs">
-      <text class="result">预测耗时: {{ predictionDuration }} ms</text>
-      <view class="sub-title">{{ resultOb.label }}</view>
-      <wux-progress status="progress" percent="{{ resultOb.value * 100 }}" />
-    </view>
   </view>
 </view>

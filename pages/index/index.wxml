@@ -8,7 +8,6 @@
       <view >以及足够的环境光线</view>
       <view style="margin-top:10px">同意请选择立即体验</view>
     </view>
-    <!-- <button class="btn" bindtap="LipstickVideo">Video</button> -->
     <button class="btn" bindtap="OpenPopup">立即体验</button>
   </view>
 </view>

@@ -1,1 +1,12 @@
-<video id="myVideo" autoplay loop object-fit src="cloud://files-sy9u7.6669-files-sy9u7-1300691796/±‰¡≥final_1_x264.mp4s" ></video>
+<video id="myVideo" autoplay object-fit bindended="onEnded" src="cloud://files-sy9u7.6669-files-sy9u7-1300691796/±‰¡≥final_1_x264.mp4">
+  <cover-view class="mask">
+    <cover-view class="maskBg">
+      <cover-view class="description">
+        我不懂为什么开发工具上和实机上的表现完全不同。（开发工具上甚至可以不用那沙比的cover-view就能在原生组件上实现覆盖！）
+      </cover-view>
+    </cover-view>
+    <button class="btnBack" bindtap="back" wx:if="{{showModal}}">
+      试试别的
+    </button>
+  </cover-view>
+</video>

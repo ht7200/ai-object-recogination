@@ -3,6 +3,7 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/mobilenet/index",
+    "pages/failbg/index",
     "pages/popup/index",
     "pages/lipstick/index"
   ],

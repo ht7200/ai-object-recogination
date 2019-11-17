@@ -19,6 +19,7 @@ page{
   width: 100%;
   height: 100vh;
   font-size: 0;
+  position: relative;
 }
 .mask{
   float: left;
@@ -44,7 +45,28 @@ page{
 
 .logs{
   position: absolute;
-  bottom: 35px;
+  top: 15px;
   left: 10px;
   color: brown;
+}
+
+
+.btn{
+  background: linear-gradient(#383838, #0D0D0D);
+  width: 100px;
+  position: fixed;
+  bottom: 50%;
+  left: 50%;
+  text-align: center;
+  padding: 10px 0 10px;
+  transform: translateX(-50%);
+  border-radius: 5px;
+}
+.btn .txt {
+  color: #FFF;
+  background: transparent;
+}
+.btn .s-btn{
+  color: #FFF;
+  background: transparent;
 }

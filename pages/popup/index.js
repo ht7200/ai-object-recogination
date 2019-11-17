@@ -9,7 +9,7 @@ Page({
     phoneData: imgs.phone
   },
   JumpToCamera() {
-    wx.navigateTo({
+    wx.redirectTo({
       url: '/pages/mobilenet/index',
     })
   },

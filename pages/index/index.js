@@ -4,7 +4,7 @@ const app = getApp()
 
 Page({
   data: {
-    windowHeight: '100',
+    windowHeight: '100vh',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -17,7 +17,7 @@ Page({
   },
   LipstickVideo() {
     wx.navigateTo({
-      url: '/pages/lipstick/index',
+      url: '/pages/watch/index',
     })
   },
   JumpToCamera() {

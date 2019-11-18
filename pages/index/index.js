@@ -17,7 +17,7 @@ Page({
   },
   LipstickVideo() {
     wx.navigateTo({
-      url: '/pages/watch/index',
+      url: '/pages/video/index',
     })
   },
   JumpToCamera() {

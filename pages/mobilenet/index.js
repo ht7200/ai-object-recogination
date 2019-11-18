@@ -1,18 +1,25 @@
 
 //index.js
 import { Classifier } from '../../models/mobilenet/classifier';
+import { debounce } from '../../utils/util'
 const config =  require('../../utils/config');
+const imgs = require('../../utils/image');
 
 //获取应用实例
 const app = getApp()
 
-let tot = null
+let tot = null;
+let time2video = null;
 
 Page({
   data: {
+    lipstickData: imgs.lipstick,
+    toastData: '',
+    watchData: imgs.watch,
     windowHeight: '100vh',
     windowWidth:'376',
     loaded: false,
+    lock: true,
     predicting: false,
     predictionDuration: 0,
     preditionResults: [],
@@ -56,27 +63,31 @@ Page({
         )
         const end = Date.now()
 
-        // console.log(predictionResults[0]);
         // 判断
+        if(predictionResults[0].index == 70 && predictionResults[0].value >= 0.6) {
+          clearTimeout(tot);
+          console.log(predictionResults[0].label);
+          _this.setData({
+            desc: '口红能瞬间点亮女人的气色。',
+            video: 'cloud://files-sy9u7.6669-files-sy9u7-1300691796/LipWithoutShine_x264.mp4',
+            toastData: 'cloud://files-sy9u7.6669-files-sy9u7-1300691796/kouhong1.png',
+            visable: true
+          });
+          // this.throttling();
+        }else if(predictionResults[0].index == 74 && predictionResults[0].value >= 0.6) {
+          clearTimeout(tot);
+          console.log(predictionResults[0].label);
+          _this.setData({
+            desc: '时钟停转也止不住时光荏苒。',
+            video: 'cloud://files-sy9u7.6669-files-sy9u7-1300691796/±‰¡≥final_1_x264.mp4',
+            toastData:'cloud://files-sy9u7.6669-files-sy9u7-1300691796/biao1.png',
+            visable: true
+          })
+          // this.throttling();
+        }
+        /*
         const index = predictionResults[0].index;
         const value = predictionResults[0].value;
-
-        /*
-        if(predictionResults[0].index == 70 && predictionResults[0].value >= 0.7) {
-          clearTimeout(tot);
-            _this.setData({
-              desc: '口红能瞬间点亮女人的气色。',
-              video: 'cloud://files-sy9u7.6669-files-sy9u7-1300691796/LipWithoutShine_x264.mp4',
-              visable: true
-            })
-        }else if(predictionResults[0].index == 74 && predictionResults[0].value >= 0.7) {
-          clearTimeout(tot);
-            _this.setData({
-              desc: '时钟停转也止不住时光荏苒。',
-              video: 'cloud://files-sy9u7.6669-files-sy9u7-1300691796/±‰¡≥final_1_x264.mp4',
-              visable: true
-            })
-        }*/
 
         Object.keys(config.list).forEach(function(key){
           if(Number(index) === Number(key) && value >= 0.7){
@@ -85,11 +96,12 @@ Page({
             _this.setData({
               desc: config.list[key].desc,
               video: config.list[key].video,
+              toastData: config.list[key].toast,
               visable: true
             })
           }
         });
-
+        */
         _this.setData({
           predicting: false,
           predictionDuration: end - start,
@@ -107,6 +119,13 @@ Page({
       url: '/pages/video/index?src=' + this.data.video + '&desc='+ this.data.desc,
     })
   },
+  navigateToVideo() {
+    let _this = this;
+    // time2video = setTimeout(function(){
+    //   _this.WatchVideo();
+    // },3000)
+    console.log('yayaya')
+  },
   showLoadingToast() {
     wx.showLoading({
       title: '加载神经网络',
@@ -121,6 +140,20 @@ Page({
     wx.navigateTo({
       url: '/pages/failbg/index',
     })
+  },
+  throttling(e){
+    let _this = this;
+    if(this.data.lock){
+      this.setData({
+        lock: false
+      })
+      setTimeout(()=>{
+        _this.setData({
+          lock: true
+        })
+        _this.WatchVideo();
+      },10000)
+    }
   },
   async onReady() {
     let _this = this;
@@ -150,20 +183,26 @@ Page({
   },
   onShow: function() {
     console.log('onShow');
+    this.setData({
+      visable: false
+    })
     let _this =this;
     if(this.data.loaded){
       tot = setTimeout(function(){
         _this.JumpToFail();
       },10000)
     }
+  },
+  onHide: function () {
+    clearTimeout(tot);
     this.setData({
       visable: false
     })
   },
-  onHide: function () {
-    clearTimeout(tot);
-  },
   onUnload: function () {
     clearTimeout(tot);
+    this.setData({
+      visable: false
+    })
   },
 })

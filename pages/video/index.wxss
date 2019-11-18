@@ -12,15 +12,16 @@
 }
 .description{
   font-size: 22px;
-  margin: 15px 10px ;
   color: #FFF;
   white-space: normal;
   overflow: visible;
+  line-height: 15vh;
 }
 .maskBg{
   position: absolute;
   bottom: 0px;
-  background: rgba(0,0,0,.4);
+  height: 15vh;
+  background: rgba(33,33,33,.4);
   width: 100%;
 }
 .btnBack{

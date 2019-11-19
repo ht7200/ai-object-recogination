@@ -3,8 +3,9 @@ import * as tf from '@tensorflow/tfjs-core'
 
 // const GOOGLE_CLOUD_STORAGE_DIR = 'https://www.gstaticcnapps.cn/tfjs-models/savedmodel/'
 // const MODEL_FILE_URL = 'mobilenet_v2_1.0_224/model.json'
-const MODEL_STORAGE_DIR = 'https://ai.flypot.cn/models/'
-const MODEL_FILE_URL = 'mobilenet/model.json'
+// const MODEL_STORAGE_DIR = 'https://ai.flypot.cn/models/' 
+const MODEL_STORAGE_DIR = 'https://wechat.gwantsi.com/models/'
+const MODEL_FILE_URL = 'model.json'
 const PREPROCESS_DIVISOR = 255 / 2
 
 export class MobileNet {

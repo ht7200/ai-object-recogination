@@ -1,7 +1,7 @@
 <view class="page">
   <view class="page__bd">
     <camera
-      style="height:{{windowHeight}}px;width:{{windowWidth}}px;"
+      style="display:{{camera?'block':'none'}};height:{{windowHeight}}px;width:{{windowWidth}}px;"
       device-position="back"
       flash="off"
       binderror="error"
@@ -20,11 +20,13 @@
           <button class="txt">识别成功</button>
           <button class="s-btn">点击跳转：欣赏影片</button>
         </button> -->
-        <cover-view class="toast" wx:if="{{visable}}" bindtap="WatchVideo">
-          <cover-image class="popup" wx:if="{{toastData}}" src="{{toastData}}"></cover-image>
-        </cover-view>
       </cover-view>
     </camera>
-    <!-- <view>visable:{{visable}}</view> -->
+    <view wx:if="{{!camera}}" class="graph_wall">
+      <image class="img" src="{{src}}" alt="photo"></image>
+      <view class="mask">
+        <button class="content">您成功识别到了{{result}}</button>
+      </view>
+    </view>
   </view>
 </view>

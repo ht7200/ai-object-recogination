@@ -1,7 +1,6 @@
 
 //index.js
 import { Classifier } from '../../models/mobilenet/classifier';
-import { debounce } from '../../utils/util'
 const config =  require('../../utils/config');
 const imgs = require('../../utils/image');
 
@@ -13,13 +12,16 @@ let time2video = null;
 
 Page({
   data: {
+    camera: true,
     lipstickData: imgs.lipstick,
     toastData: '',
     watchData: imgs.watch,
     windowHeight: '100vh',
     windowWidth:'376',
     loaded: false,
+    src: 'cloud://files-sy9u7.6669-files-sy9u7-1300691796/kouhong1.png',
     lock: true,
+    lock_1: true,
     predicting: false,
     predictionDuration: 0,
     preditionResults: [],
@@ -67,23 +69,25 @@ Page({
         if(predictionResults[0].index == 70 && predictionResults[0].value >= 0.6) {
           clearTimeout(tot);
           console.log(predictionResults[0].label);
+          this.takePhoto();
           _this.setData({
+            result: predictionResults[0].label,
             desc: '口红能瞬间点亮女人的气色。',
             video: 'cloud://files-sy9u7.6669-files-sy9u7-1300691796/LipWithoutShine_x264.mp4',
-            toastData: 'cloud://files-sy9u7.6669-files-sy9u7-1300691796/kouhong1.png',
             visable: true
           });
-          // this.throttling();
+          this.throttling();
         }else if(predictionResults[0].index == 74 && predictionResults[0].value >= 0.6) {
           clearTimeout(tot);
           console.log(predictionResults[0].label);
+          this.takePhoto();
           _this.setData({
+            result: predictionResults[0].label,
             desc: '时钟停转也止不住时光荏苒。',
             video: 'cloud://files-sy9u7.6669-files-sy9u7-1300691796/±‰¡≥final_1_x264.mp4',
-            toastData:'cloud://files-sy9u7.6669-files-sy9u7-1300691796/biao1.png',
             visable: true
           })
-          // this.throttling();
+          this.throttling();
         }
         /*
         const index = predictionResults[0].index;
@@ -109,6 +113,24 @@ Page({
         })
       })
     }
+  },
+  takePhoto() {
+    const ctx = wx.createCameraContext()
+    ctx.takePhoto({
+      quality: 'high',
+      success: (res) => {
+        console.log(this.data.src || res.tempImagePath);
+        this.setData({
+        src: this.data.src || res.tempImagePath,
+        camera: false,
+        })
+      }
+    })
+  },
+  close(){
+    this.setData({
+      camera: false,
+    })
   },
   WatchVideo() {
     clearTimeout(tot);
@@ -149,10 +171,11 @@ Page({
       })
       setTimeout(()=>{
         _this.setData({
-          lock: true
+          lock: true,
+          camera: false
         })
         _this.WatchVideo();
-      },10000)
+      },5000)
     }
   },
   async onReady() {
@@ -184,7 +207,10 @@ Page({
   onShow: function() {
     console.log('onShow');
     this.setData({
-      visable: false
+      visable: false,
+      camera: true,
+      src: null,
+      result: ''
     })
     let _this =this;
     if(this.data.loaded){

@@ -37,6 +37,13 @@ Page({
     })
   },
   onLoad: function() {
-    
+    if(!wx.canIUse('createCameraContext')){
+      // 客服小姐姐说没有退出小程序的api，后期也不考虑添加此项功能。
+      wx.showModal({
+        title: '提示',
+        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。',
+        showCancel: false
+      })
+    }
   }
 })

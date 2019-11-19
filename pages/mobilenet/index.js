@@ -202,7 +202,6 @@ Page({
   onShow: function() {
     console.log('onShow');
     this.setData({
-      lock_1: false,
       visable: false,
       camera: true,
       src: null,

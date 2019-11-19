@@ -1,6 +1,6 @@
 Page({ 
   JumpBack() {
-    wx.navigateBack({
+    wx.redirectTo({
       url: '/pages/mobilenet/index',
     })
   }

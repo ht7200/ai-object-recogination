@@ -21,7 +21,6 @@ Page({
     loaded: false,
     src: 'cloud://files-sy9u7.6669-files-sy9u7-1300691796/kouhong1.png',
     lock: true,
-    lock_1: true,
     predicting: false,
     predictionDuration: 0,
     preditionResults: [],
@@ -36,20 +35,14 @@ Page({
 
   initClassifier() {
     let _this = this;
-    if (this.classifier == null) {
-      this.showLoadingToast()
-      const classifier = new Classifier(this)
-      classifier.load().then(() => {
-        this.classifier = classifier
-        this.hideLoadingToast()
-        this.setData({
-          loaded: true
-        })
-        tot = setTimeout(function(){
-          _this.JumpToFail();
-        },10000)
-      })
-    }
+    this.hideLoadingToast();
+    this.classifier = app.globalData.classifier
+    this.setData({
+      loaded: true
+    });
+    tot = setTimeout(function(){
+      _this.JumpToFail();
+    },10000)
   },
 
   executeClassify(frame) {
@@ -64,12 +57,11 @@ Page({
           { width: frame.width, height: frame.height }
         )
         const end = Date.now()
-
+        console.log(predictionResults[0].label);
         // 判断
         if(predictionResults[0].index == 70 && predictionResults[0].value >= 0.6) {
           clearTimeout(tot);
           console.log(predictionResults[0].label);
-          this.takePhoto();
           _this.setData({
             result: predictionResults[0].label,
             desc: '口红能瞬间点亮女人的气色。',
@@ -80,7 +72,6 @@ Page({
         }else if(predictionResults[0].index == 74 && predictionResults[0].value >= 0.6) {
           clearTimeout(tot);
           console.log(predictionResults[0].label);
-          this.takePhoto();
           _this.setData({
             result: predictionResults[0].label,
             desc: '时钟停转也止不住时光荏苒。',
@@ -100,7 +91,7 @@ Page({
             _this.setData({
               desc: config.list[key].desc,
               video: config.list[key].video,
-              toastData: config.list[key].toast,
+              result: predictionResults[0].label,
               visable: true
             })
           }
@@ -125,7 +116,7 @@ Page({
         camera: false,
         })
       }
-    })
+    });
   },
   close(){
     this.setData({
@@ -169,6 +160,7 @@ Page({
       this.setData({
         lock: false
       })
+      _this.takePhoto();
       setTimeout(()=>{
         _this.setData({
           lock: true,
@@ -191,22 +183,38 @@ Page({
       }
     })
 
-    this.initClassifier()
+    if(app.globalData.classifier){
+      this.initClassifier()
+    }
     // Start the camera API to feed the captured images to the models.
     const context = wx.createCameraContext(this)
     const listener = context.onCameraFrame((frame) => {
       this.executeClassify(frame)
     })
-    listener.start()
+    listener.start();
+    // 监听小程序内存异常
+    wx.onMemoryWarning(function () {
+        console.log('内存不足警告')
+    })
   },
   onLoad: function() {
-    if (this.classifier) {
-      this.classifier.dispose()
+    let that = this;
+    getApp().watch(that.watchBack);
+    if(!app.globalData.classifier){
+      this.showLoadingToast()
     }
+    if (this.classifier) {
+      this.classifier.dispose();
+    }
+  },
+  watchBack: function (name){
+    console.log('watch model loaded')
+    this.initClassifier()
   },
   onShow: function() {
     console.log('onShow');
     this.setData({
+      lock_1: false,
       visable: false,
       camera: true,
       src: null,

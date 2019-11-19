@@ -23,8 +23,5 @@ Page({
         })
       }
     })
-  },
-  onLoad: function() {
-    
   }
 })

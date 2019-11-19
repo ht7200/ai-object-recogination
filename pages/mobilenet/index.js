@@ -8,7 +8,6 @@ const imgs = require('../../utils/image');
 const app = getApp()
 
 let tot = null;
-let time2video = null;
 
 Page({
   data: {
@@ -35,14 +34,20 @@ Page({
 
   initClassifier() {
     let _this = this;
-    this.hideLoadingToast();
-    this.classifier = app.globalData.classifier
-    this.setData({
-      loaded: true
-    });
-    tot = setTimeout(function(){
-      _this.JumpToFail();
-    },10000)
+    if (this.classifier == null) {
+      this.showLoadingToast()
+      const classifier = new Classifier(this)
+      classifier.load().then(() => {
+        this.classifier = classifier
+        this.hideLoadingToast()
+        this.setData({
+          loaded: true
+        })
+        tot = setTimeout(function(){
+          _this.JumpToFail();
+        },10000)
+      })
+    }
   },
 
   executeClassify(frame) {
@@ -108,7 +113,7 @@ Page({
   takePhoto() {
     const ctx = wx.createCameraContext()
     ctx.takePhoto({
-      quality: 'high',
+      quality: 'low',
       success: (res) => {
         console.log(this.data.src || res.tempImagePath);
         this.setData({
@@ -131,13 +136,6 @@ Page({
     wx.navigateTo({
       url: '/pages/video/index?src=' + this.data.video + '&desc='+ this.data.desc,
     })
-  },
-  navigateToVideo() {
-    let _this = this;
-    // time2video = setTimeout(function(){
-    //   _this.WatchVideo();
-    // },3000)
-    console.log('yayaya')
   },
   showLoadingToast() {
     wx.showLoading({
@@ -183,9 +181,7 @@ Page({
       }
     })
 
-    if(app.globalData.classifier){
-      this.initClassifier()
-    }
+    this.initClassifier()
     // Start the camera API to feed the captured images to the models.
     const context = wx.createCameraContext(this)
     const listener = context.onCameraFrame((frame) => {
@@ -199,17 +195,9 @@ Page({
   },
   onLoad: function() {
     let that = this;
-    getApp().watch(that.watchBack);
-    if(!app.globalData.classifier){
-      this.showLoadingToast()
-    }
     if (this.classifier) {
       this.classifier.dispose();
     }
-  },
-  watchBack: function (name){
-    console.log('watch model loaded')
-    this.initClassifier()
   },
   onShow: function() {
     console.log('onShow');

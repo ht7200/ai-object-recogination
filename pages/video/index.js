@@ -13,9 +13,7 @@ Page({
     })
   },
   back() {
-    wx.redirectTo({
-      url: '/pages/mobilenet/index',
-    })
+    wx.navigateBack();
   },
   onLoad: function(opt) { 
     console.log(opt);

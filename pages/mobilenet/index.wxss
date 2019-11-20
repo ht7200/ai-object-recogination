@@ -17,29 +17,29 @@ page{
 }
 .cover-view{
   width: 100%;
-  height: 100vh;
+  height: 92vh;
   font-size: 0;
   position: relative;
 }
 .mask{
   float: left;
   width: 20%;
-  height: 100vh;
+  height: 92vh;
   background: rgba(0,0,0,.4);
 }
 .mid-mask{
   float: left;
   width: 60%;
-  height: 100vh;
+  height: 92vh;
 }
 .mid-mask-top-bottom{
   width: 100%;
-  height: 20vh;
+  height: 6vh;
   background: rgba(0,0,0,.4);
 }
 .scan-aera{
   width: 100%;
-  height: 60vh;
+  height: 80vh;
   background: rgba(255, 255, 255, 0);
 }
 

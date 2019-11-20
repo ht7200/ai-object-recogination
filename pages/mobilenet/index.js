@@ -27,7 +27,9 @@ Page({
     result: '',
     visable: false,
     desc: '',
-    video: ''
+    video: '',
+    count: 0,
+    cacular: 0
   },
 
   classifier: null,
@@ -44,7 +46,7 @@ Page({
           loaded: true
         })
         tot = setTimeout(function(){
-          _this.JumpToFail();
+          // _this.JumpToFail();
         },10000)
       })
     }
@@ -185,7 +187,19 @@ Page({
     // Start the camera API to feed the captured images to the models.
     const context = wx.createCameraContext(this)
     const listener = context.onCameraFrame((frame) => {
-      this.executeClassify(frame)
+      if(!this.data.loaded) return;
+      if(this.data.count < 10) {
+        let t = this.data.count + 1;
+        this.setData({count: t})
+        return;
+      } else {
+        let c = this.data.cacular + 1;
+        this.setData({
+          cacular: c,
+          count: 0
+        })
+        this.executeClassify(frame)        
+      }
     })
     listener.start();
     // 监听小程序内存异常
@@ -210,18 +224,18 @@ Page({
     let _this =this;
     if(this.data.loaded){
       tot = setTimeout(function(){
-        _this.JumpToFail();
+        // _this.JumpToFail();
       },10000)
     }
   },
   onHide: function () {
-    clearTimeout(tot);
+    tot && clearTimeout(tot);
     this.setData({
       visable: false
     })
   },
   onUnload: function () {
-    clearTimeout(tot);
+    tot && clearTimeout(tot);
     this.setData({
       visable: false
     })

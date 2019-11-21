@@ -1,34 +1,23 @@
 <view class="page">
   <view class="page__bd">
     <camera
-      style="display:{{camera?'block':'none'}};height:{{windowHeight-50}}px;width:{{windowWidth}}px;"
+      style="display:{{camera?'block':'none'}}"
       device-position="back"
       flash="off"
       binderror="error"
-      frame-size="medium"
+      frame-size="small"
       class="camera">
-      <cover-view class="cover-view" style="width:{{windowWidth}}px">
-        <cover-view class="mask"></cover-view>
-        <cover-view class="mid-mask">
-          <cover-view class="mid-mask-top-bottom"></cover-view>
-          <cover-view class="scan-aera">
-          </cover-view>
-          <cover-view class="mid-mask-top-bottom"></cover-view>
-        </cover-view>
-        <cover-view class="mask"></cover-view>
-        <!-- <button wx:if="{{visable}}" class="btn"  bindtap="WatchVideo">
-          <button class="txt">识别成功</button>
-          <button class="s-btn">点击跳转：欣赏影片</button>
-        </button> -->
-      </cover-view>
     </camera>
-    <wiew style="display:block">预测结果：{{resultOb.label}}</wiew>
-    <wiew>运算次数：{{cacular}}</wiew>
+    <wiew class="result">
+      <view class="text">{{result?'您成功识别了':'预测结果'}}：{{result || resultOb.label}}</view>
+      <view class="progress">
+        <wux-progress  active-color="#e96900" status="progress" percent="{{ resultOb.value * 100 }}" />
+      </view>
+    </wiew>
+    
+    <!-- <wiew>运算次数：{{cacular}}</wiew> -->
     <view wx:if="{{!camera}}" class="graph_wall">
       <image class="img" src="{{src}}" alt="photo"></image>
-      <view class="mask">
-        <button class="content">您成功识别到了{{result}}</button>
-      </view>
     </view>
   </view>
 </view>

@@ -24,7 +24,7 @@ Page({
     predictionDuration: 0,
     preditionResults: [],
     resultOb: {},
-    result: '',
+    result: null,
     visable: false,
     desc: '',
     video: '',
@@ -66,23 +66,23 @@ Page({
         const end = Date.now()
         console.log(predictionResults[0].label);
         // 判断
-        if(predictionResults[0].index == 70 && predictionResults[0].value >= 0.6) {
+        if(predictionResults[0].index == 70 && predictionResults[0].value >= 0.3) {
           clearTimeout(tot);
           console.log(predictionResults[0].label);
           _this.setData({
             result: predictionResults[0].label,
             desc: '口红能瞬间点亮女人的气色。',
-            video: 'cloud://files-sy9u7.6669-files-sy9u7-1300691796/LipWithoutShine_x264.mp4',
+            video: 'https://wechat.gwantsi.com/videos/LipWithoutShine_x264.mp4',
             visable: true
           });
           this.throttling();
-        }else if(predictionResults[0].index == 74 && predictionResults[0].value >= 0.6) {
+        }else if(predictionResults[0].index == 74 && predictionResults[0].value >= 0.3) {
           clearTimeout(tot);
           console.log(predictionResults[0].label);
           _this.setData({
             result: predictionResults[0].label,
             desc: '时钟停转也止不住时光荏苒。',
-            video: 'cloud://files-sy9u7.6669-files-sy9u7-1300691796/±‰¡≥final_1_x264.mp4',
+            video: 'https://wechat.gwantsi.com/videos/watch.mp4',
             visable: true
           })
           this.throttling();
@@ -167,7 +167,7 @@ Page({
           camera: false
         })
         _this.WatchVideo();
-      },5000)
+      },3000)
     }
   },
   async onReady() {
@@ -187,18 +187,8 @@ Page({
     // Start the camera API to feed the captured images to the models.
     const context = wx.createCameraContext(this)
     const listener = context.onCameraFrame((frame) => {
-      if(!this.data.loaded) return;
-      if(this.data.count < 10) {
-        let t = this.data.count + 1;
-        this.setData({count: t})
-        return;
-      } else {
-        let c = this.data.cacular + 1;
-        this.setData({
-          cacular: c,
-          count: 0
-        })
-        this.executeClassify(frame)        
+      if(!this.data.result){
+        this.executeClassify(frame)
       }
     })
     listener.start();
@@ -219,12 +209,12 @@ Page({
       visable: false,
       camera: true,
       src: null,
-      result: ''
+      result: null
     })
     let _this =this;
     if(this.data.loaded){
       tot = setTimeout(function(){
-        // _this.JumpToFail();
+        _this.JumpToFail();
       },10000)
     }
   },

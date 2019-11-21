@@ -1,4 +1,10 @@
-<video id="myVideo" autoplay object-fit="fill" controls="{{false}}" bindended="onEnded" src="{{src}}" >
+<video id="myVideo" autoplay object-fit="fill" 
+  controls="{{false}}"
+  show-progress="{{false}}"
+  show-fullscreen-btn="{{false}}"
+  show-play-btn="{{false}}"
+  bindended="onEnded" 
+  src="{{src}}" >
   <cover-view class="mask">
     <cover-view class="maskBg">
       <cover-view class="description">

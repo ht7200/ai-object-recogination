@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "AI屋GI物",
   "usingComponents": {
     "wux-row": "../../miniprogram_npm/wux-weapp/row/index",
     "wux-col": "../../miniprogram_npm/wux-weapp/col/index",

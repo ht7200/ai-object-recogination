@@ -1,11 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs",
-    "pages/mobilenet/index",
-    "pages/failbg/index",
-    "pages/popup/index",
-    "pages/video/index"
+    "pages/logs/logs"
   ],
   "window": {
     "backgroundTextStyle": "light",

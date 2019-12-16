@@ -1,8 +1,0 @@
-<view class="page" style="height:{{windowHeight}}px">
-  <view class="pop">
-    <image class="phone" mode="widthFix" src="cloud\://hongtun-xqk9a.686f-hongtun-xqk9a-1254305529/imgs/phone.png" />
-    <view >将长方形识别区对准物体</view>
-    <view >识别成功后将出现预制动画</view>
-    <button class="btn" bindtap="JumpToCamera">我知道了</button>
-  </view>
-</view>

@@ -1,14 +1,23 @@
-<!--index.wxml-->
-<view class="page" style="height:{{windowHeight}}px">
-  <view class="content" style="padding-top: {{windowHeight/2}}px"> 
-    <view class="content-text">
-      <view >手机摄像头将在此体验中全程开启</view>
-      <view >识别真实场景中的物体</view>
-      <view >请确保摄像头无遮挡</view>
-      <view >以及足够的环境光线</view>
-      <view style="margin-top:10px">同意请选择立即体验</view>
+<view class="page">
+  <view class="page__bd">
+    <camera
+      style="display:{{camera?'block':'none'}}"
+      device-position="back"
+      flash="off"
+      binderror="error"
+      frame-size="small"
+      class="camera">
+    </camera>
+    <wiew class="result">
+      <view class="text">{{result?'您成功识别了':'预测结果'}}：{{result || resultOb.label}}</view>
+      <view class="progress">
+        <wux-progress  active-color="#e96900" status="progress" percent="{{ resultOb.value * 100 }}" />
+      </view>
+    </wiew>
+    
+    <!-- <wiew>运算次数：{{cacular}}</wiew> -->
+    <view wx:if="{{!camera}}" class="graph_wall">
+      <image class="img" src="{{src}}" alt="photo"></image>
     </view>
-    <!-- <button class="btn" bindtap="LipstickVideo">Video</button> -->
-    <button class="btn" bindtap="OpenPopup">立即体验</button>
   </view>
 </view>

@@ -11,10 +11,10 @@ App({
       // inject tfjs runtime
       tf,
       // provide webgl canvas
-      canvas: wx.createOffscreenCanvas()
-    })
+      canvas: wx.createOffscreenCanvas(),
+    });
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
   }
 })
